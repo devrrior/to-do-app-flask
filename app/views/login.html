@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-sm row bg-light mx-auto mt-5 py-3 card" style="max-width: 500px">
+    <form action="http://localhost:5000/users" method="POST">
+
+        <div class="col-12 mt-1">
+            <label for="inputUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="inputUsername">
+        </div>
+
+        <div class="col-12 col-sm-12 mt-1">
+            <label for="inputPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword">
+        </div>
+
+        <div class="d-grid mt-3 mb-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
