@@ -24,3 +24,34 @@
                  {{ field(class="form-control") }}
                  {% endif %}
 {% endmacro %}
+
+{% macro render_messages(messages) %}
+      {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+          {% for category,message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }} 
+            </div>
+          {% endfor %}
+        {% endif %} 
+      {% endwith %}
+
+      <!-- {% with messages = get_flashed_messages(with_categories=True) %} -->
+      <!--   {% if messages %} -->
+      <!--     {% for category,message in messages %} -->
+      <!--       <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5"> -->
+      <!--         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"> -->
+      <!--           <div class="toast-header"> -->
+      <!--             <img src="..." class="rounded me-2" alt="..."> -->
+      <!--             <strong class="me-auto">Logged In!</strong> -->
+      <!--             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
+      <!--           </div> -->
+      <!--           <div class="toast-body"> -->
+      <!--               {{ message }} -->
+      <!--           </div> -->
+      <!--         </div> -->
+      <!--       </div> -->     
+      <!--     {% endfor %} -->
+      <!--   {% endif %} --> 
+      <!-- {% endwith %} -->
+{% endmacro %}
