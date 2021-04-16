@@ -1,0 +1,26 @@
+{% macro render_task(title, body, task_id) %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-1 px-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ title }}</h5>
+                <p class="card-text">{{ body }}</p>
+                <a href="http://localhost:5000/users/edit/{{ task_id }}" class="btn  btn-primary">Edit</a>
+                <a href="http://localhost:5000/users/delete/{{ task_id }}" class="btn  btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+{% endmacro%}
+
+{% macro render_field(field) %}
+                 {% if field.errors %}
+                    {{ field.label(class="form-label") }}
+                    {{ field(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                 {% else %}
+                 {{ field.label(class="form-label") }}
+                 {{ field(class="form-control") }}
+                 {% endif %}
+{% endmacro %}

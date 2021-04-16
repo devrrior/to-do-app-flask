@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% from "_render_elements.html" import render_field %}
+{% block content %}
+<div class="container-sm row bg-light mx-auto mt-5 py-3 card" style="max-width: 500px">
+    <form action="{{ url_for('auth.login') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="col-12 mt-1">
+            {{ render_field(form.username) }}
+        </div>
+
+        <div class="col-12 col-sm-12 mt-1">
+            {{ render_field(form.password) }}
+        </div>
+
+        <div class="d-grid mt-3 mb-2">
+            {{ form.submit(class_="btn btn-primary") }} 
+        </div>
+
+    </form>
+</div>
+{% endblock %}

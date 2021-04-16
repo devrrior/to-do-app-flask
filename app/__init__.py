@@ -1,12 +1,14 @@
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from app.database import db
 
-app = Flask(__name__, template_folder="../app/views/")
+
+from app.auth.auth import auth
+from app.general.general import general
+
+app = Flask(__name__)
+db.init_app(app)
 app.config.from_object("config.DevelopmentConfig")
 
-db = SQLAlchemy(app)
-
-from app.routes.index_routes import *
-from app.routes.registrations_routes import *
-from app.routes.login_routes import *
+app.register_blueprint(auth,url_prefix="/")
+app.register_blueprint(general,url_prefix="/")
