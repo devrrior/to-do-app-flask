@@ -2,7 +2,7 @@
 {% from "_render_elements.html" import render_field %}
 {% block content %}
 <div class="container-sm row bg-light mx-auto mt-5 py-3 card" style="max-width: 500px">
-    <form action="{{ url_for('auth.signup') }}" method="POST">
+    <form action="{{ url_for('auth_bp.signup') }}" method="POST">
         {{ form.hidden_tag() }}
 
         <div class="col-12 col-sm-12 mt-1">

@@ -6,40 +6,42 @@
     <meta name="viewport" content="width=device-width" />
     <title>{{ title_page }}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   </head>
 
   <body style="background: #ededed">
     <!-- HEADER -->
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid px-4">
-          <a class="navbar-brand fs-3" href="#">TODO APP</a>
+        <div class="container px-4">
+          <a class="navbar-brand fs-3" href="{{ url_for('tasks_bp.tasks') }}">TODO APP</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto">
+              {% if current_user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link fs-6" aria-current="page" href="http://localhost:5000/">Home</a>
+                <a class="fs-6 btn btn-success mx-1" aria-current="page" href="{{ url_for('tasks_bp.task_new') }}">New Task</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fs-6" aria-current="page" href="http://localhost:5000/login">Login</a>
+                <a class="fs-6 btn btn-danger mx-1" aria-current="page" href="{{ url_for('auth_bp.logout') }}">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link active fs-6" aria-current="page" href="{{ url_for('auth_bp.login') }}">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link fs-6" aria-current="page" href="http://localhost:5000/signup">Sign Up</a>
+                <a class="nav-link fs-6" aria-current="page" href="{{ url_for('auth_bp.signup') }}">Sign Up</a>
               </li>
-        </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light" type="submit">Search</button>
-            </form>
+              {% endif %}
+            </ul>
           </div>
         </div>
       </nav>
     </header>
 
-    <main class="container-fluid p-3">
+    <main class="container py-3">
       {{ render_messages(messages) }}
       {% block content %}
       {% endblock %}

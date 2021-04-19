@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template
 
-general = Blueprint("general", __name__,
+general_bp = Blueprint("general_bp", __name__,
     template_folder="templates",
-    static_folder="static", static_url_path="assets")
+    static_folder="static")
 
-@general.route("/")
+@general_bp.route("/")
 def index():
     title_page = "Home"
     username = "Fernando"

@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 {% from "_render_elements.html" import render_field %}
 {% block content %}
-<div class="container-sm row bg-light mx-auto mt-5 py-3 card" style="max-width: 500px">
-    <form action="{{ url_for('auth_bp.login') }}" method="POST">
+<h1 class="text-center mt-4">New Task</h1>
+<div class="container-sm row bg-light mx-auto mt-3 py-3 card" style="max-width: 800px">
+    <form action="{{ url_for('tasks_bp.task_new') }}" method="POST">
         {{ form.hidden_tag() }}
         <div class="col-12 mt-1">
-            {{ render_field(form.username) }}
+            {{ render_field(form.title) }}
         </div>
 
         <div class="col-12 col-sm-12 mt-1">
-            {{ render_field(form.password) }}
+            {{ render_field(form.description) }}
         </div>
 
         <div class="d-grid mt-3 mb-2">
@@ -18,4 +19,4 @@
 
     </form>
 </div>
-{% endblock %}
+{% endblock content %}

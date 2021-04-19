@@ -1,11 +1,11 @@
-{% macro render_task(title, body, task_id) %}
+{% macro render_task(title, description, task_id) %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-1 px-2">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{ title }}</h5>
-                <p class="card-text">{{ body }}</p>
-                <a href="http://localhost:5000/users/edit/{{ task_id }}" class="btn  btn-primary">Edit</a>
-                <a href="http://localhost:5000/users/delete/{{ task_id }}" class="btn  btn-danger">Delete</a>
+                <p class="card-text">{{ description }}</p>
+                <a href="{{ url_for('tasks_bp.task_edit', task_id=task_id) }}" class="btn  btn-primary">Edit</a>
+                <a href="#" class="btn  btn-danger">Delete</a>
             </div>
         </div>
     </div>
@@ -35,23 +35,4 @@
           {% endfor %}
         {% endif %} 
       {% endwith %}
-
-      <!-- {% with messages = get_flashed_messages(with_categories=True) %} -->
-      <!--   {% if messages %} -->
-      <!--     {% for category,message in messages %} -->
-      <!--       <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5"> -->
-      <!--         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"> -->
-      <!--           <div class="toast-header"> -->
-      <!--             <img src="..." class="rounded me-2" alt="..."> -->
-      <!--             <strong class="me-auto">Logged In!</strong> -->
-      <!--             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
-      <!--           </div> -->
-      <!--           <div class="toast-body"> -->
-      <!--               {{ message }} -->
-      <!--           </div> -->
-      <!--         </div> -->
-      <!--       </div> -->     
-      <!--     {% endfor %} -->
-      <!--   {% endif %} --> 
-      <!-- {% endwith %} -->
 {% endmacro %}
