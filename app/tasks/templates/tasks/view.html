@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "_render_elements.html" import render_task %}
+{% from "_render_elements.html" import render_task, render_modal_remove%}
 {% block content %}
 {% if tasks|length != 0 %}
 <h1 class="my-2" >Here you have your tasks {{ current_user.username }}:</h1>
@@ -7,7 +7,7 @@
 <div class="row px-3">
     {% if tasks|length != 0 %}
         {% for task in tasks %}
-            {{ render_task(task.title,task.description,task.id) }}
+            {{ render_task(task.title,task.little_title,task.description,task.little_description,task.id) }}
         {% endfor %}
     {% else %}
     <div class="alert alert-secondary">You should create a new task, just click <a href="{{ url_for('tasks_bp.task_new') }}" class="link-link">here</a>.

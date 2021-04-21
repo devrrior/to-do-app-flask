@@ -8,46 +8,41 @@ from app.models import User
 #         if len(field.data) > 0:
 #                 raise validators.ValidationError("Area must be empty")
 
+
 class SignupForm(FlaskForm):
-    email = StringField("Email",validators=[
-        DataRequired(),
-        Email()
-    ])
-    username = StringField("Username",validators=[
-        Length(max=30,min=3),
-        DataRequired()
-    ])
-    password= PasswordField("Password",validators=[
-        DataRequired()
-    ])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    username = StringField(
+        "Username", validators=[Length(max=30, min=3), DataRequired()]
+    )
+    password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
-
-    def validate_username(self,username):
+    def validate_username(self, username):
         if User.get_by_username(username.data):
             raise validators.ValidationError("User not available.")
 
-    def validate_email(self,email):
+    def validate_email(self, email):
         if User.get_by_email(email.data):
             raise validators.ValidationError("Email not available.")
 
+
 class LoginForm(FlaskForm):
-    username = StringField("Username",validators=[
-        DataRequired(),
-    ])
-    password= PasswordField("Password",validators=[
-        DataRequired()
-    ])
+    username = StringField(
+        "Username",
+        validators=[
+            DataRequired(),
+        ],
+    )
+    password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+
 class TaskForm(FlaskForm):
-    title = StringField("Title",validators=[
-        DataRequired(),
-        Length(min=5,max=40)
-    ])
-    description = TextAreaField("Description",validators=[
-        DataRequired(),
-        Length(min=10,max=140)
-    ],render_kw={"rows": 6,"style":"resize:none;"})
+    title = StringField("Title", validators=[DataRequired(), Length(min=5, max=40)])
+    description = TextAreaField(
+        "Description",
+        validators=[DataRequired(), Length(min=10, max=140)],
+        render_kw={"rows": 6, "style": "resize:none;"},
+    )
 
     submit = SubmitField("Submit")

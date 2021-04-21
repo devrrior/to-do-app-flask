@@ -1,28 +1,31 @@
-{% macro render_task(title, description, task_id) %}
+{% macro render_task(title, little_title, description, little_description, task_id) %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-1 px-2">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ title }}</h5>
-                <p class="card-text">{{ description }}</p>
+                <h5 class="card-title">{{ little_title }}</h5>
+                <p class="card-text">{{ little_description }}</p>
                 <a href="{{ url_for('tasks_bp.task_edit', task_id=task_id) }}" class="btn  btn-primary">Edit</a>
-                <a href="#" class="btn  btn-danger">Delete</a>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#content-modal-{{ task_id }}">Delete</button>
+                {{ render_modal_delete(task_id)}}
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#content-modal-show-{{ task_id }}">Show</button>
+                {{ render_modal_show(title,description,task_id)}}
             </div>
         </div>
     </div>
 {% endmacro%}
 
 {% macro render_field(field) %}
-                 {% if field.errors %}
-                    {{ field.label(class="form-label") }}
-                    {{ field(class="form-control is-invalid") }}
-                    <div class="invalid-feedback">
-                    {% for error in field.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                 {% else %}
-                 {{ field.label(class="form-label") }}
-                 {{ field(class="form-control") }}
-                 {% endif %}
+            {% if field.errors %}
+              {{ field.label(class="form-label") }}
+              {{ field(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+              {% for error in field.errors %}
+                  <span>{{ error }}</span>
+              {% endfor %}
+            {% else %}
+            {{ field.label(class="form-label") }}
+            {{ field(class="form-control") }}
+            {% endif %}
 {% endmacro %}
 
 {% macro render_messages(messages) %}
@@ -30,9 +33,48 @@
         {% if messages %}
           {% for category,message in messages %}
             <div class="alert alert-{{ category }}">
-              {{ message }} 
+              {{ message }}
             </div>
           {% endfor %}
-        {% endif %} 
+        {% endif %}
       {% endwith %}
 {% endmacro %}
+
+{% macro render_modal_delete(id) %}
+                <div class="modal fade" id="content-modal-{{ id }}" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h2 class="modal-title">Wait!</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure to delete this task?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{{ url_for('tasks_bp.task_delete', task_id=id) }}" class="btn  btn-danger">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+{% endmacro%}
+
+{% macro render_modal_show(title,description,id) %}
+                <div class="modal fade" id="content-modal-show-{{ id }}" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h2 class="modal-title">{{ title }}</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>{{ description }}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+{% endmacro%}

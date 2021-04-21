@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from app.database import db
+from app.models import db
 from app.login_manager import login_manager
 
 
@@ -9,7 +9,6 @@ from app.general.general import general_bp
 from app.tasks.tasks import tasks_bp
 
 app = Flask(__name__)
-
 
 
 db.init_app(app)
