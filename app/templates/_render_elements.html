@@ -1,5 +1,5 @@
 {% macro render_task(title, little_title, description, little_description, task_id) %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-1 px-2">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 p-1 px-2">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{ little_title }}</h5>
@@ -32,8 +32,9 @@
       {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
           {% for category,message in messages %}
-            <div class="alert alert-{{ category }}">
+            <div class="alert alert-{{ category }} alert-dismissible fade show">
               {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           {% endfor %}
         {% endif %}

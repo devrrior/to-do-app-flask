@@ -1,4 +1,4 @@
-from app.form import TaskForm
+from app.tasks.form_tasks import TaskForm
 from app.models import Task
 from flask import Blueprint, render_template, redirect, request, url_for, flash, abort
 from flask_login import login_required, current_user

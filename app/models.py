@@ -16,18 +16,35 @@ class Task(db.Model):
 
     @property
     def little_title(self):
-        if len(self.title) > 19:
-            return self.title[0:26] + "..."
+        """Make more small the title because in the dashboard, that looks bad
+
+        Returns:
+            string: the title but more small
+        """
+
+        if len(self.title) > 38:
+            return self.title[0:38] + "..."
         return self.title
 
     @property
     def little_description(self):
-        if len(self.description) > 20:
-            return self.description[0:30] + "..."
+        if len(self.description) > 50:
+            return self.description[0:40] + "..."
         return self.description
 
     @classmethod
     def create_task(cls, title, description, user_id):
+        """Create a object type task and insert in the database
+
+        Args:
+            title (string): Task's title
+            description (string): Task's description
+            user_id (int): It's the id of the user to which the task belongs
+
+        Returns:
+            objetc tasks: It's the task who has title, description and user_id
+        """
+
         new_task = Task(title=title, description=description, user_id=user_id)
         db.session.add(new_task)
         db.session.commit()
@@ -36,11 +53,24 @@ class Task(db.Model):
 
     @classmethod
     def get_by_id(cls, id):
+        """Get the object user by id
+
+        Args:
+            id (int): the task's id
+
+        Returns:
+            object task: return the object task who was finded
+        """
         return Task.query.filter_by(id=id).first()
 
     @classmethod
     def update_task(cls, id, title, description):
         task = Task.get_by_id(id)
+        """Update the task
+
+        Returns:
+            object task: return the object task but with the propierties changed
+        """
 
         if task is None:
             return False
@@ -56,6 +86,11 @@ class Task(db.Model):
     @classmethod
     def delete_task(cls, id):
         task = Task.get_by_id(id)
+        """delte one task by id
+
+        Returns:
+            boolean: return true if the task was removed successfully and false if the task was removed unccessfully
+        """
 
         if task is None:
             return False
@@ -77,6 +112,14 @@ class User(db.Model, UserMixin):
         return f"Id:{self.id}, username:{self.username}, email:{self.email}, password_hash:{self.password_hash}"
 
     def verify_password(self, password):
+        """verify if the password is correct or not
+
+        Args:
+            password (string): string with hash
+
+        Returns:
+            boolean: it's true if the password is corresponds to the user
+        """
         return check_password_hash(self.password_hash, password)
 
     @property
@@ -85,10 +128,25 @@ class User(db.Model, UserMixin):
 
     @password.setter
     def password(self, value):
+        """help to hash the password who is give by the client
+
+        Args:
+            value (string): password but hashed
+        """
         self.password_hash = generate_password_hash(value, method="sha256")
 
     @classmethod
     def create_user(cls, username, email, password_hash):
+        """create one object user
+
+        Args:
+            username (string): user's username
+            email (string): user's email
+            password_hash (string): user's password with hash
+
+        Returns:
+            object user: return the user created
+        """
         new_user = User(username=username, email=email, password=password_hash)
         db.session.add(new_user)
         db.session.commit()
@@ -97,12 +155,36 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def get_by_username(cls, username):
+        """get the object user by username
+
+        Args:
+            username (string): username was gived by the client
+
+        Returns:
+            object user: return the object user was finded by de username
+        """
         return User.query.filter_by(username=username).first()
 
     @classmethod
     def get_by_email(cls, email):
+        """get the object user by id
+
+        Args:
+            email (string): string who was give by the client
+
+        Returns:
+            object user: return the object user who was finded by the email
+        """
         return User.query.filter_by(email=email).first()
 
     @classmethod
     def get_by_id(cls, id):
+        """Get the object user by id
+
+        Args:
+            id (int): id who was gived by the client
+
+        Returns:
+            object user: return the object finded by id
+        """
         return User.query.filter_by(id=id).first()

@@ -1,5 +1,5 @@
 from app import db, login_manager
-from app.form import LoginForm, SignupForm
+from app.auth.form_auth import LoginForm, SignupForm
 from app.models import User
 from flask import Blueprint, redirect, render_template, request, url_for, flash, session
 from flask_login import login_user, logout_user, current_user
@@ -31,7 +31,7 @@ def signup():
         login_user(user)
         return redirect(url_for("tasks_bp.tasks"))
 
-    return render_template("auth/signup.html", title_page="Sign Up", form=signup_form)
+    return render_template("auth/signup.html", title_page="Sign Up", form=signup_form, active="signup")
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
@@ -42,16 +42,17 @@ def login():
         return redirect(url_for("tasks_bp.tasks"))
 
     if login_form.validate_on_submit():
-        user = User.query.filter(User.username == login_form.username.data).first()
+        user = User.query.filter(
+            User.username == login_form.username.data).first()
 
         if user and user.verify_password(login_form.password.data):
             flash("You have been logged in!", "success")
             login_user(user)
             return redirect(url_for("tasks_bp.tasks"))
-        flash("Login unsuccesful. Please check username and password.", "danger")
+        flash("Login unsuccessful. Please check username and password.", "danger")
         return redirect(url_for("auth_bp.login"))
 
-    return render_template("auth/login.html", title_page="Login", form=login_form)
+    return render_template("auth/login.html", title_page="Login", form=login_form, active="login")
 
 
 @auth_bp.route("/logout")
