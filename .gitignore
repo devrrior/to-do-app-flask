@@ -3,3 +3,4 @@ __pycache__/
 .vscode/
 .vim/
 .DS_Store
+.env

@@ -11,13 +11,20 @@ from app.tasks.tasks import tasks_bp
 
 app = Flask(__name__)
 
-app.config.from_object("config.DevelopmentConfig")
 
-db.init_app(app)
-login_manager.init_app(app)
-login_manager.login_view = "auth_bp.login"
-login_manager.login_message_category = "danger"
+def create_app(config):
 
-app.register_blueprint(auth_bp)
-app.register_blueprint(general_bp)
-app.register_blueprint(tasks_bp)
+    app.config.from_object("config.DevelopmentConfig")
+
+    app.app_context().push()
+
+    db.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "auth_bp.login"
+    login_manager.login_message_category = "danger"
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(general_bp)
+    app.register_blueprint(tasks_bp)
+
+    return app

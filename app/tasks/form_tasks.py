@@ -6,10 +6,10 @@ from app.models import User
 
 class TaskForm(FlaskForm):
     title = StringField("Title", validators=[
-                        DataRequired(), Length(min=5, max=40)])
+                        DataRequired(), Length(min=5, max=80)])
     description = TextAreaField(
         "Description",
-        validators=[DataRequired(), Length(min=10, max=140)],
+        validators=[DataRequired(), Length(min=10, max=240)],
         render_kw={"rows": 6, "style": "resize:none;"},
     )
 

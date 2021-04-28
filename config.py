@@ -1,24 +1,33 @@
+from dotenv import load_dotenv
 import os
-
-DB_URI = "sqlite:///" + os.path.abspath("./database.db")
+load_dotenv()
 
 
 class Config(object):
     DEBUG = False
-    TESTING = False
+    TEST = False
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = (
-        "\x8bm\r\xa6v\x88\xe4'\xebt\x19W\xc3\x84\x92 \xaf\xac:\x9e\xc1D\x96\xcc"
-    )
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 class ProductionConfig(Config):
     DEBUG = False
-    # SECRET_KEY = os.environ["SECRET_KEY"]
-    SQLALCHEMY_DATABASE_URI = DB_URI
+    SQLALCHEMY_DATABASE_URI = os.getenv("DB_URI")
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite3"
+    SQLALCHEMY_DATABASE_URI = os.getenv("DB_URI_DEV")
+
+
+class TestConfig(Config):
+    TEST = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///db_test.sqlite3"
+
+
+config = {
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
+    "test": TestConfig,
+}

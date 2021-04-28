@@ -7,8 +7,8 @@ db = SQLAlchemy()
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(40), nullable=True)
-    description = db.Column(db.String(140), nullable=True)
+    title = db.Column(db.String(80), nullable=True)
+    description = db.Column(db.String(240), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __str__(self):
