@@ -17,6 +17,7 @@ class ProductionConfig(Config):
 
 
 class DevelopmentConfig(Config):
+    ENV = "development"
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv("DB_URI_DEV")
 
@@ -29,5 +30,5 @@ class TestConfig(Config):
 config = {
     "development": DevelopmentConfig,
     "production": ProductionConfig,
-    "test": TestConfig,
+    "test": TestConfig
 }
