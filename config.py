@@ -25,10 +25,3 @@ class DevelopmentConfig(Config):
 class TestConfig(Config):
     TEST = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///db_test.sqlite3"
-
-
-config = {
-    "development": DevelopmentConfig,
-    "production": ProductionConfig,
-    "test": TestConfig
-}

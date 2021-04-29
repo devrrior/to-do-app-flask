@@ -12,4 +12,4 @@ RUN pip install --upgrade pip \
 
 COPY . .
 
-CMD ["python","run.py"]
+ENTRYPOINT ["python","run.py"]
