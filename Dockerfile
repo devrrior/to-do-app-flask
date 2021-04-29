@@ -12,4 +12,7 @@ RUN pip install --upgrade pip \
 
 COPY . .
 
+RUN adduser -D myuser
+USER myuser
+
 ENTRYPOINT ["python","run.py"]
