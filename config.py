@@ -1,6 +1,6 @@
-from dotenv import load_dotenv
 import os
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 
 class Config(object):
@@ -8,18 +8,18 @@ class Config(object):
     TEST = False
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.getenv("SECRET_KEY")
+    SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("DB_URI")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URI")
 
 
 class DevelopmentConfig(Config):
     ENV = "development"
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("DB_URI_DEV")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URI_DEV")
 
 
 class TestConfig(Config):
